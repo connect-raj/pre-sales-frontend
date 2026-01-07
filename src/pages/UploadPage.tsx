@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from 'react'
+import { AlertCircle } from 'lucide-react'
 import type { ExcelUploadResponse } from '../api/types'
 import { useApiStatus } from '../state/api-status'
 import { useSession } from '../state/session'
@@ -39,6 +40,21 @@ export function UploadPage() {
     specialInstructions: sessionSpecialInstructions,
     clearSessionMeta,
   } = useSession()
+
+  const [ingesting, setIngesting] = useState(false)
+  const [ingestError, setIngestError] = useState<string | null>(null)
+
+  async function handleIngestHistory() {
+    setIngesting(true)
+    setIngestError(null)
+    try {
+      await apiFetch('/history/ingest', { method: 'POST' })
+    } catch (err: any) {
+      setIngestError(err?.message || 'Ingestion failed')
+    } finally {
+      setIngesting(false)
+    }
+  }
 
   const [files, setFiles] = useState<Record<UploadKind, File | null>>({
     document: null,
@@ -132,6 +148,7 @@ export function UploadPage() {
     title: string
     accept: string
     note: string
+    disabled?: boolean
   }) {
     const res = response[props.kind]
     return (
@@ -146,6 +163,7 @@ export function UploadPage() {
               <Input
                 type="file"
                 accept={props.accept}
+                disabled={ingesting}
                 onChange={(e) =>
                   setFiles((f) => ({
                     ...f,
@@ -153,7 +171,7 @@ export function UploadPage() {
                   }))
                 }
               />
-              <Button onClick={() => handleUpload(props.kind)} disabled={loading[props.kind]}>
+              <Button onClick={() => handleUpload(props.kind)} disabled={loading[props.kind] || ingesting}>
                 {loading[props.kind] ? 'Uploading…' : 'Upload'}
               </Button>
             </div>
@@ -172,11 +190,19 @@ export function UploadPage() {
                     <span className="text-zinc-600">File:</span> {String(res.fileName || '')}
                   </div>
                   <div>
+                    <span className="text-zinc-600">Saved as:</span> {String(res.savedName || '')}
+                  </div>
+                  <div>
                     <span className="text-zinc-600">Size:</span> {formatBytes(Number(res.size || 0))}
                   </div>
                   <div className="sm:col-span-2">
-                    <span className="text-zinc-600">URL:</span> {String(res.url || '')}
+                    <span className="text-zinc-600">Path:</span> {String(res.path || '')}
                   </div>
+                  {res.url ? (
+                    <div className="sm:col-span-2">
+                      <span className="text-zinc-600">URL:</span> {String(res.url)}
+                    </div>
+                  ) : null}
                   {props.kind === 'excel' && res.sessionId ? (
                     <div className="sm:col-span-2">
                       <span className="text-zinc-600">Session ID:</span> {String(res.sessionId)}
@@ -261,18 +287,38 @@ export function UploadPage() {
         </CardContent>
       </Card>
 
+      {/* Ingest History Button */}
+      <div className="mb-4">
+        <Button
+          onClick={handleIngestHistory}
+          disabled={ingesting}
+          className="w-full lg:w-auto"
+        >
+          {ingesting ? 'Ingesting History…' : 'Ingest History'}
+        </Button>
+        {ingestError && (
+          <Alert className="border-red-200 bg-red-50 mt-2 flex items-center gap-2">
+            <AlertCircle className="h-4 w-4 text-red-500" />
+            <AlertTitle>Ingestion error</AlertTitle>
+            <AlertDescription>{ingestError}</AlertDescription>
+          </Alert>
+        )}
+      </div>
+
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <UploadCard
           kind="document"
           title="Upload Document's Like SOW, RFD and other"
           accept=".pdf,.doc,.docx,.html,.txt"
           note="Allowed: .pdf/.docx/.html/.txt (max 5MB). Text is stored as embeddings."
+          disabled={ingesting}
         />
         <UploadCard
           kind="excel"
           title="Upload Excel"
           accept=".xls,.xlsx"
           note="Allowed: .xls/.xlsx (max 5MB). Returns sessionId + detected departments."
+          disabled={ingesting}
         />
       </div>
     </div>

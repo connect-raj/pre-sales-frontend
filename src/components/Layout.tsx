@@ -43,6 +43,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <div className="text-sm font-semibold">Pre-Sales Estimator</div>
           <nav className="flex items-center gap-1">
             <NavItem to="/upload">Upload</NavItem>
+            <NavItem to="/past-files">Past Files</NavItem>
             <NavItem to="/estimate">Estimate</NavItem>
             <NavItem to="/status">Status</NavItem>
             <NavItem to="/results">Results</NavItem>

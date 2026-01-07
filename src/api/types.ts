@@ -9,13 +9,15 @@ export type EstimationStatus =
 export type EstimateConfidence = "Low" | "Medium" | "High";
 
 export interface FileUploadResponseBase {
-  url: string;
-  publicId: string;
+  url?: string;
+  path: string;
+  savedName: string;
+  publicId?: string;
   format?: string;
   size: number;
   uploadedAt: string;
   fileName: string;
-  fileType: "SOW" | "FRD" | "EXCEL";
+  fileType: "SOW" | "FRD" | "EXCEL" | "DOCUMENT";
 }
 
 export interface ExcelUploadResponse extends FileUploadResponseBase {
