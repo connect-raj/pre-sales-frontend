@@ -1,4 +1,15 @@
-export type Department = "frontend" | "backend" | "mobile" | "htmlCss" | "aiMl";
+export type Department =
+  | "React"
+  | "Next"
+  | "Vue"
+  | "Flutter"
+  | "React.Native"
+  | "html/css"
+  | "AI-ML"
+  | "Nest"
+  | "Node"
+  | "DotNet"
+  | "Blockchain";
 
 export type EstimationStatus =
   | "PENDING"

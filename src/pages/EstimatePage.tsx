@@ -10,7 +10,7 @@ import { Label } from '../components/ui/label'
 import { Alert, AlertDescription, AlertTitle } from '../components/ui/alert'
 import { useNavigate } from 'react-router-dom'
 
-const ALL_DEPARTMENTS: Department[] = ['frontend', 'backend', 'mobile', 'htmlCss', 'aiMl']
+const ALL_DEPARTMENTS: Department[] = ['React', 'Next', 'Vue', 'Flutter', 'React.Native', 'html/css', 'AI-ML', 'Nest', 'Node', 'DotNet', 'Blockchain']
 
 export function EstimatePage() {
   const { apiFetch } = useApiStatus()
