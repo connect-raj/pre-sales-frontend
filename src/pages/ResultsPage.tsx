@@ -17,7 +17,7 @@ import { Label } from '../components/ui/label'
 import { Textarea } from '../components/ui/textarea'
 import { Alert, AlertDescription, AlertTitle } from '../components/ui/alert'
 
-const DEPARTMENTS: Department[] = ['frontend', 'backend', 'mobile', 'htmlCss', 'aiMl']
+const DEPARTMENTS: Department[] = ['React', 'Next', 'Vue', 'Flutter', 'React.Native', 'html/css', 'AI-ML', 'Nest', 'Node', 'DotNet', 'Blockchain']
 
 type EditableRange = HoursRange
 
@@ -76,11 +76,17 @@ export function ResultsPage() {
   const totals = useMemo(() => {
     const rows = draft || []
     const sums: Record<Department, number> = {
-      frontend: 0,
-      backend: 0,
-      mobile: 0,
-      htmlCss: 0,
-      aiMl: 0,
+      React: 0,
+      Next: 0,
+      Vue: 0,
+      Flutter: 0,
+      "React.Native": 0,
+      "html/css": 0,
+      "AI-ML": 0,
+      Nest: 0,
+      Node: 0,
+      DotNet: 0,
+      Blockchain: 0,
     }
     for (const row of rows) {
       for (const d of DEPARTMENTS) sums[d] += Number(row.ranges[d]?.mostLikely || 0)
@@ -117,11 +123,17 @@ export function ResultsPage() {
           techRemarks: String((it as any).techRemarks || ''),
           userRemark,
           ranges: {
-            frontend: toRange((it as any).frontendHoursRange, (it as any).frontendHours),
-            backend: toRange((it as any).backendHoursRange, (it as any).backendHours),
-            mobile: toRange((it as any).mobileHoursRange, (it as any).mobileHours),
-            htmlCss: toRange((it as any).htmlCssHoursRange, (it as any).htmlCssHours),
-            aiMl: toRange((it as any).aiMlHoursRange, (it as any).aiMlHours),
+            React: toRange((it as any).reactHoursRange, (it as any).reactHours),
+            Next: toRange((it as any).nextHoursRange, (it as any).nextHours),
+            Vue: toRange((it as any).vueHoursRange, (it as any).vueHours),
+            Flutter: toRange((it as any).flutterHoursRange, (it as any).flutterHours),
+            "React.Native": toRange((it as any).reactNativeHoursRange, (it as any).reactNativeHours),
+            "html/css": toRange((it as any).htmlCssHoursRange, (it as any).htmlCssHours),
+            "AI-ML": toRange((it as any).aiMlHoursRange, (it as any).aiMlHours),
+            Nest: toRange((it as any).nestHoursRange, (it as any).nestHours),
+            Node: toRange((it as any).nodeHoursRange, (it as any).nodeHours),
+            DotNet: toRange((it as any).dotNetHoursRange, (it as any).dotNetHours),
+            Blockchain: toRange((it as any).blockchainHoursRange, (it as any).blockchainHours),
           },
         }
       })
@@ -171,11 +183,17 @@ export function ResultsPage() {
         techRemarks: String((it as any).techRemarks || row.techRemarks || ''),
         userRemark: String((it as any).userRemark ?? row.userRemark ?? ''),
         ranges: {
-          frontend: toRange((it as any).frontendHoursRange, (it as any).frontendHours),
-          backend: toRange((it as any).backendHoursRange, (it as any).backendHours),
-          mobile: toRange((it as any).mobileHoursRange, (it as any).mobileHours),
-          htmlCss: toRange((it as any).htmlCssHoursRange, (it as any).htmlCssHours),
-          aiMl: toRange((it as any).aiMlHoursRange, (it as any).aiMlHours),
+          React: toRange((it as any).reactHoursRange, (it as any).reactHours),
+          Next: toRange((it as any).nextHoursRange, (it as any).nextHours),
+          Vue: toRange((it as any).vueHoursRange, (it as any).vueHours),
+          Flutter: toRange((it as any).flutterHoursRange, (it as any).flutterHours),
+          "React.Native": toRange((it as any).reactNativeHoursRange, (it as any).reactNativeHours),
+          "html/css": toRange((it as any).htmlCssHoursRange, (it as any).htmlCssHours),
+          "AI-ML": toRange((it as any).aiMlHoursRange, (it as any).aiMlHours),
+          Nest: toRange((it as any).nestHoursRange, (it as any).nestHours),
+          Node: toRange((it as any).nodeHoursRange, (it as any).nodeHours),
+          DotNet: toRange((it as any).dotNetHoursRange, (it as any).dotNetHours),
+          Blockchain: toRange((it as any).blockchainHoursRange, (it as any).blockchainHours),
         },
       }
 
@@ -242,25 +260,49 @@ export function ResultsPage() {
       complexity: r.complexity,
       techRemarks: r.techRemarks,
 
-      frontend_min: r.ranges.frontend.min,
-      frontend_mostLikely: r.ranges.frontend.mostLikely,
-      frontend_max: r.ranges.frontend.max,
+      react_min: r.ranges.React.min,
+      react_mostLikely: r.ranges.React.mostLikely,
+      react_max: r.ranges.React.max,
 
-      backend_min: r.ranges.backend.min,
-      backend_mostLikely: r.ranges.backend.mostLikely,
-      backend_max: r.ranges.backend.max,
+      next_min: r.ranges.Next.min,
+      next_mostLikely: r.ranges.Next.mostLikely,
+      next_max: r.ranges.Next.max,
 
-      mobile_min: r.ranges.mobile.min,
-      mobile_mostLikely: r.ranges.mobile.mostLikely,
-      mobile_max: r.ranges.mobile.max,
+      vue_min: r.ranges.Vue.min,
+      vue_mostLikely: r.ranges.Vue.mostLikely,
+      vue_max: r.ranges.Vue.max,
 
-      htmlCss_min: r.ranges.htmlCss.min,
-      htmlCss_mostLikely: r.ranges.htmlCss.mostLikely,
-      htmlCss_max: r.ranges.htmlCss.max,
+      flutter_min: r.ranges.Flutter.min,
+      flutter_mostLikely: r.ranges.Flutter.mostLikely,
+      flutter_max: r.ranges.Flutter.max,
 
-      aiMl_min: r.ranges.aiMl.min,
-      aiMl_mostLikely: r.ranges.aiMl.mostLikely,
-      aiMl_max: r.ranges.aiMl.max,
+      reactNative_min: r.ranges["React.Native"].min,
+      reactNative_mostLikely: r.ranges["React.Native"].mostLikely,
+      reactNative_max: r.ranges["React.Native"].max,
+
+      htmlCss_min: r.ranges["html/css"].min,
+      htmlCss_mostLikely: r.ranges["html/css"].mostLikely,
+      htmlCss_max: r.ranges["html/css"].max,
+
+      aiMl_min: r.ranges["AI-ML"].min,
+      aiMl_mostLikely: r.ranges["AI-ML"].mostLikely,
+      aiMl_max: r.ranges["AI-ML"].max,
+
+      nest_min: r.ranges.Nest.min,
+      nest_mostLikely: r.ranges.Nest.mostLikely,
+      nest_max: r.ranges.Nest.max,
+
+      node_min: r.ranges.Node.min,
+      node_mostLikely: r.ranges.Node.mostLikely,
+      node_max: r.ranges.Node.max,
+
+      dotNet_min: r.ranges.DotNet.min,
+      dotNet_mostLikely: r.ranges.DotNet.mostLikely,
+      dotNet_max: r.ranges.DotNet.max,
+
+      blockchain_min: r.ranges.Blockchain.min,
+      blockchain_mostLikely: r.ranges.Blockchain.mostLikely,
+      blockchain_max: r.ranges.Blockchain.max,
     }))
 
     const wb = XLSX.utils.book_new()

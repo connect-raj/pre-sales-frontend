@@ -71,20 +71,32 @@ function downloadArrayAsXlsx(array: ArrayBuffer, filename: string) {
 }
 
 const DEPARTMENTS: Department[] = [
-  "frontend",
-  "backend",
-  "mobile",
-  "htmlCss",
-  "aiMl",
+  "React",
+  "Next",
+  "Vue",
+  "Flutter",
+  "React.Native",
+  "html/css",
+  "AI-ML",
+  "Nest",
+  "Node",
+  "DotNet",
+  "Blockchain",
 ];
 
 function headerLabel(dept: Department, k: keyof HoursRange) {
   const deptLabel: Record<Department, string> = {
-    frontend: "Frontend",
-    backend: "Backend",
-    mobile: "Mobile",
-    htmlCss: "HTML/CSS",
-    aiMl: "AI/ML",
+    React: "React",
+    Next: "Next",
+    Vue: "Vue",
+    Flutter: "Flutter",
+    "React.Native": "React Native",
+    "html/css": "HTML/CSS",
+    "AI-ML": "AI/ML",
+    Nest: "Nest",
+    Node: "Node",
+    DotNet: ".NET",
+    Blockchain: "Blockchain",
   };
   const keyLabel: Record<keyof HoursRange, string> = {
     min: "Min",
